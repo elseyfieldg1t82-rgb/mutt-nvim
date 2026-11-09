@@ -1,0 +1,2 @@
+# mutt-nvim
+nothing yet
